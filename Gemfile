@@ -35,6 +35,7 @@ group :development, :test do
   gem 'capybara'
   gem 'pry-rails'
   gem 'launchy'
+  gem 'simple_form'
 end
 
 group :doc do
