@@ -1,0 +1,127 @@
+rails new inventory -d=postgresql
+
+cd invetory
+
+git init
+git add .
+git commit - 'initial commit'
+
+remove credentials from database.yml
+
+rake db:create 
+rake db:migrate
+rake db:test:prepare
+
+add gems in gem file
+  rspec-rails
+  factory_girl
+  shoulda
+  valid_attribute
+  capybara
+  pry-rails
+  launchy
+  simple_form
+
+bundle && rails g rspec:install
+
+rails g simple_form:install --foundation
+  *This creates 3 files
+
+rm -rf test
+
+git add -A
+git commit -m "added necessary gems & switched to rspec"
+
+
+mv config/database.yml config/database.example.yml
+git commit -am "relocate database.yml"
+add config/database.yml to .gitignore 
+  *Open .gitignore in Sublime & type " /config/database.yml" at the bottom
+git commit -am "added database.yml to .gitignore"
+cp config/database.example.yml to config/database.yml
+  *Yes, I will have TWO yml files
+
+
+git add -A
+git commit -m "added database.yml to .gitignore"
+
+
+git checkout -b receive-inventory
+
+
+create spec/features folder
+  create receive_inventory_spec.rb
+  add feature / user story
+  add acceptance criteria
+  read/review acceptance criteria before proceeding
+  add acceptance test
+
+run rspec spec/features/receive_inventory_spec.rb
+  error: unitialized constant InventoryReceipt
+
+rails g model InventoryReceipt title:string description:text quantity:integer
+  *creates 3 files
+
+open spec/model file and add unit tests
+  *this is discipline to always make a unit test after
+  *created acceptance tests. It's best to add unit tests
+  *before adding any logic to the app/model
+
+run rspec spec/model file
+
+Open app/model/inventory_receipt.rb and add validations 
+  *Add validation for integers
+
+Open the migration to reflect the required validations
+
+rake db:migrate && rake db:rollback rake db:migrate
+rake db:test:prepare
+
+run rspec spec/models file
+  *It's green! 
+
+rspec spec/features/receive_inventory_spec.rb
+  *undefined local variable or method 'new_iventory_receipt_path'
+  *this means 
+
+rails g controller inventory_receipts
+  *Remove ALL files that do NOT add business value
+
+rm -rf app/assets/javascripts/inventory_receipts.js.coffee
+rm -rf app/assets/stylesheets/inventory_receipts.css.scss
+rm -rf spec/helpers/inventory_receipts_helper_spec.rb
+rm -rf spec/controllers
+
+
+Open new controller inventory_receipts_controller.rb
+  *Def the method 'new'
+
+Create new.html.erb and utilize simple form  
+
+Open routes file to add resources
+
+****Now is a great time to start the server and
+inspect the form in the browser****
+
+run rspec spec/features/receive_inventory_spec.rb
+  *error: the action 'create' could not be found
+
+Open inventory_receipts_controller file to add Create Method
+  *Strong Params Methd will also need to be added since params is
+  *an argument for Create
+
+rspec spec/features/receive_inventory_spec.rb
+  error: expected to find text "Receipt recorded."
+
+open application.html.erb and add flash notice
+
+rspec spec/features/receive_inventory_spec.rb
+  *Green!
+
+Resume the second acceptance test scenario
+
+rspec spec/features/receive_inventory_spec.rb
+  *Feature tests are green!
+  *Notice that HTML5 flash notice is being invoked in the       config/initializers/simple_form.rb (on line 72)
+  which is causing the error message to appear in a different manner. To change this, simply uncomment the line and 
+  change "true" to "false"
