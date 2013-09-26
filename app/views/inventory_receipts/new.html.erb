@@ -1,0 +1,9 @@
+<h1>Log new receipt</h1>
+
+<%= simple_form_for(@inventory_receipt) do |f| %>
+    <%= f.input :title %>
+    <%= f.input :description %>
+    <%= f.input :quantity %>
+
+    <%= f.submit 'Receive' %>
+<%- end -%> 

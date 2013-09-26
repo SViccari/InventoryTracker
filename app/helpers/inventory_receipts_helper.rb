@@ -1,0 +1,2 @@
+module InventoryReceiptsHelper
+end
